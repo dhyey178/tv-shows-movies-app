@@ -22,56 +22,110 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Backend Service (NestJS API)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This backend service, built with **NestJS**, provides the API endpoints for the TV Shows & Movies App. It is responsible for:
 
-## Project setup
+* Serving paginated lists of movies and TV shows, including their latest reviews.
+* Providing detailed views for individual movies and TV shows, along with paginated comments.
+* Handling creation of new movies, TV shows, and comments.
+* Performing data validation and managing the database schema (SQLite via Prisma).
+* Exposing an interactive API documentation via Swagger.
 
+## Technologies Used
+
+* **Framework**: [NestJS](https://nestjs.com/)
+* **Database**: SQLite
+* **ORM**: [Prisma](https://www.prisma.io/)
+* **API Documentation**: [Swagger](https://swagger.io/)
+* **Language**: TypeScript
+
+## Endpoints Overview
+
+Here's a summary of the main API endpoints served by this backend:
+
+### Movies
+
+* **`GET /movies`**: Get a paginated list of movies with their latest 5 comments.
+* **`POST /movies`**: Create a new movie.
+* **`GET /movies/{id}`**: Get a single movie by ID with its latest 5 comments.
+* **`GET /movies/{id}/comments`**: Get paginated comments for a specific movie.
+
+### TV Shows
+
+* **`GET /tv-shows`**: Get a paginated list of TV shows with their latest 5 comments.
+* **`POST /tv-shows`**: Create a new TV show.
+* **`GET /tv-shows/{id}`**: Get a single TV show by ID with its latest 5 comments.
+* **`GET /tv-shows/{id}/comments`**: Get paginated comments for a specific TV show.
+
+### Comments
+
+* **`POST /comments`**: Create a new comment for a movie or TV show.
+
+*(Note: APIs for creating movies, TV shows, and adding comments are currently exposed via the API but do not have a direct frontend UI. You can test these functionalities using tools like Postman or through the Swagger UI.)*
+
+## Local Setup
+
+**Important:** For overall monorepo setup, please refer to the main `README.md` in the project root. The following steps are specific to running and managing the backend in isolation.
+
+### Prerequisites
+
+* Node.js v20
+* pnpm v10
+
+### Installation
+
+If you are only working on the backend or need to install its dependencies specifically:
+
+* Install Dependencies
 ```bash
-$ pnpm install
+pnpm install
 ```
 
-## Compile and run the project
-
+* Create env or copy `.env.example`
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+cp .env.example .env
 ```
 
-## Run tests
-
+* Initialize Database
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm db:init
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g mau
-$ mau deploy
+* Seed Database
+``` bash
+pnpm prisma:seed
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+* Start Backend 
+``` bash
+pnpm start:dev
+```
+
+### API Documentation (Swagger)
+Once the backend service is running, you can access the interactive Swagger UI at:
+`http://localhost:4200/api`
+This interface allows you to explore the available API endpoints and test them directly in your browser.
+
+
+### Testing
+```bash
+pnpm test
+```
+
+### Database Management
+
+The backend uses SQLite as its database, managed by Prisma.
+
+* **Database File Location:** Your local database file is located at `prisma/prisma/dev.db` (path configurable through `.env`). This file is ignored by Git and should not be committed.
+
+* **Prisma Schema:** The database schema is defined in `prisma/schema.prisma`.
+
+* **Migrations:** Database migrations are located in `prisma/migrations/`.
 
 ## Resources
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 Check out a few resources that may come in handy when working with NestJS:
 
