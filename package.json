@@ -1,0 +1,23 @@
+{
+  "name": "tv-shows-movies-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" -c \"bgBlue.bold,bgGreen.bold\" \"pnpm --filter backend start:dev\" \"sleep 5 && pnpm --filter frontend dev\"",
+    "dev:backend": "pnpm --filter backend start:dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "install:all": "pnpm install",
+    "build:all": "pnpm --filter backend build && pnpm --filter frontend build",
+    "build:backend": "pnpm --filter backend build",
+    "build:frontend": "pnpm --filter frontend build",
+    "test:all": "pnpm run test:backend && pnpm run test:frontend",
+    "test:backend": "pnpm --filter backend test",
+    "test:frontend": "pnpm --filter frontend test",
+    "db:init": "pnpm --filter backend db:init",
+    "db:seed": "pnpm --filter backend prisma:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  },
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
+}

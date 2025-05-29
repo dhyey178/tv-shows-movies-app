@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Movie {
+  id          String    @id @default(uuid())
+  title       String    @unique
+  description String
+  releaseYear Int
+  genre       String
+  imageUrl    String
+  cast        String
+  director    String
+  duration    Int
+  comments    Comment[] @relation("MovieComments")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model TvShow {
+  id          String    @id @default(uuid())
+  title       String    @unique
+  description String
+  releaseYear Int
+  seasons     Int
+  genre       String
+  imageUrl    String
+  cast        String
+  creator     String
+  episodes    Int
+  comments    Comment[] @relation("TvShowComments")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("tvShow")
+}
+
+model Comment {
+  id          String    @id @default(uuid())
+  content     String
+  author      String
+  avatar      String?
+  rating      Int
+  createdAt   DateTime  @default(now())  
+  movieId     String?
+  movie       Movie?    @relation("MovieComments", fields: [movieId], references: [id])
+  tvShowId    String?
+  tvShow      TvShow?   @relation("TvShowComments", fields: [tvShowId], references: [id])
+}
